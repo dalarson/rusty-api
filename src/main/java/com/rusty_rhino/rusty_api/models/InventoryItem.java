@@ -24,7 +24,8 @@ public class InventoryItem {
     private double price;
     private boolean sold;
     @NonNull
-    @PartitionKey
     private String type;
+    @PartitionKey
+    private String pk = "inventory";
 
 }
