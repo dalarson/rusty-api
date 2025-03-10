@@ -16,10 +16,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build with Maven
-        run: ./mvnw clean install
+        run: mvn clean install
 
   deploy:
       runs-on: ubuntu-latest
+      needs: build
       steps:
       # checkout the repo
       - name: 'Checkout GitHub Action'
