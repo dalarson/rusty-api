@@ -33,6 +33,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
+      - name: 'print directory info'
+        run: |
+          ls -la
+          find . -name *.jar
+      
       - name: 'Build and push image'
         uses: azure/docker-login@v1
         with:
