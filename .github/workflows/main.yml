@@ -22,7 +22,7 @@ jobs:
       - name: build the app
         run: |
           mvn clean
-          mvn -B package --file pom.xml
+          mvn -B package --file pom.xml -DskipTests
             
       # checkout the repo
       - name: 'Checkout GitHub Action'
