@@ -9,10 +9,10 @@ jobs:
   build-and-deploy-docker:
       runs-on: ubuntu-latest
       steps:
-      # checkout the repo
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@main
-        
+      - uses: actions/checkout@v2
+      - name: Build and test
+        run: ./mvnw clean package -DskipTests
+
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
@@ -27,15 +27,3 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/rusty-api:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/rusty-api:${{ github.sha }}
-
-      - name: 'Deploy to Azure Container Instances'
-        uses: 'azure/aci-deploy@v1'
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/rusty-api:${{ github.sha }}
-          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          registry-username: ${{ secrets.REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: rhinoacr
-          location: 'central us'
