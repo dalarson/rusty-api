@@ -11,7 +11,7 @@ jobs:
       steps:
       - uses: actions/checkout@v2
       - name: Build and test
-        run: ./mvnw clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
