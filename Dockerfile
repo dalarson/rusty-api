@@ -1,7 +1,5 @@
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-RUN pwd
-RUN ls -la
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ADD target/rusty-api-0.0.1-SNAPSHOT.jar /app/rusty-api.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "rusty-api.jar"]
