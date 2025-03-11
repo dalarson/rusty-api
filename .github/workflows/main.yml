@@ -6,36 +6,13 @@ on: [push]
 name: Rusty API CI
 
 jobs:
-  build-deploy:
-    name: Build and Deploy Rusty API
+  deploy-container:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-
-      - name: setup jdk 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'corretto'
-          java-version: 17
-
-      - name: build the app
-        run: |
-          mvn clean
-          mvn -B package --file pom.xml -DskipTests
-            
-      # checkout the repo
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@main
-        
       - name: 'Login via Azure CLI'
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      
-      - name: 'print directory info'
-        run: |
-          ls -la && find . -name *.jar
       
       - name: 'Build and push image'
         uses: azure/docker-login@v1
