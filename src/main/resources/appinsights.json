@@ -1,0 +1,6 @@
+{
+    "connectionString": "InstrumentationKey=e0b411b4-69f6-43c3-b05a-8da4d8745ca1;IngestionEndpoint=https://centralus-2.in.applicationinsights.azure.com/;LiveEndpoint=https://centralus.livediagnostics.monitor.azure.com/;ApplicationId=d886ba77-d22e-4b89-92fb-40bed72dc3ba",
+    "role": {
+        "name": "my cloud role name"
+    }
+}
