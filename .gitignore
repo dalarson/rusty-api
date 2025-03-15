@@ -25,3 +25,5 @@ replay_pid*
 
 # target folder contains build artifacts
 target/
+
+.vscode
