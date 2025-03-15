@@ -22,6 +22,7 @@ public class InventoryItem {
     private String id;
     @NonNull
     private double price;
+    private String imgUrl;
     private boolean sold;
     @NonNull
     private String type;
