@@ -7,13 +7,13 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 
-import io.netty.handler.codec.http.HttpContentEncoder.Result;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,6 +23,7 @@ public class InventoryImageController {
     private final BlobServiceClient blobServiceClient;
     private final String containerName = "img";
 
+    @CrossOrigin("http://localhost:5173/")
     @PostMapping("/img")
     public String uploadImage(@RequestParam MultipartFile file) throws IOException {
         try (InputStream inputStream = file.getInputStream()) {

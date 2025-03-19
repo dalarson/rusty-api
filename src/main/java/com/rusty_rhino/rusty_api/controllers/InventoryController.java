@@ -1,5 +1,6 @@
 package com.rusty_rhino.rusty_api.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,11 +24,13 @@ public class InventoryController {
     private final InventoryRepository repo;
     private final PartitionKey pk = new PartitionKey("inventory");
 
+    @CrossOrigin("http://localhost:5173/")
     @GetMapping("/inventory")
     Flux<InventoryItem> getInventory() {
         return repo.findAll();
     }
 
+    @CrossOrigin("http://localhost:5173/")
     @PutMapping("/inventory")
     public String insertInventoryItem(@RequestBody InventoryItem item) {
         try {
@@ -40,6 +43,7 @@ public class InventoryController {
         }
     }
 
+    @CrossOrigin("http://localhost:5173/")
     @PatchMapping("/inventory/{id}")
     public String updateInventoryItem(@PathVariable String id, @RequestBody InventoryItem item) {
         try {
@@ -59,6 +63,7 @@ public class InventoryController {
         }
     }
 
+    @CrossOrigin("http://localhost:5173/")
     @DeleteMapping("/inventory/{id}")
     public void deleteInventoryItem(@PathVariable String id) {
         try {
