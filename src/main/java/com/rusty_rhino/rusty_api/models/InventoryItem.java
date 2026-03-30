@@ -8,7 +8,7 @@ import io.micrometer.common.lang.NonNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@Container(containerName = "inventory")
+@Container(containerName = "inventory", autoCreateContainer = false)
 @Data
 @RequiredArgsConstructor
 public class InventoryItem {
