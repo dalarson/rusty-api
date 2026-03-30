@@ -8,6 +8,10 @@ env:
   JAVA_VERSION: '17'
   APP_NAME: rusty-api
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
