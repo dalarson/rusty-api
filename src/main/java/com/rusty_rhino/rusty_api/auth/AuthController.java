@@ -1,6 +1,9 @@
 package com.rusty_rhino.rusty_api.auth;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,22 +19,17 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthController {
 
     private final JwtUtil jwtUtil;
-    private final String adminUser1;
-    private final String adminPass1;
-    private final String adminUser2;
-    private final String adminPass2;
+    private final Map<String, String> adminCredentials = new HashMap<>();
 
-    public AuthController(
-            JwtUtil jwtUtil,
-            @Value("${auth.admin.user1.username:}") String adminUser1,
-            @Value("${auth.admin.user1.password:}") String adminPass1,
-            @Value("${auth.admin.user2.username:}") String adminUser2,
-            @Value("${auth.admin.user2.password:}") String adminPass2) {
+    public AuthController(JwtUtil jwtUtil, Environment env) {
         this.jwtUtil = jwtUtil;
-        this.adminUser1 = adminUser1;
-        this.adminPass1 = adminPass1;
-        this.adminUser2 = adminUser2;
-        this.adminPass2 = adminPass2;
+        for (int i = 1; ; i++) {
+            String username = env.getProperty("auth.admin.user" + i + ".username");
+            String password = env.getProperty("auth.admin.user" + i + ".password");
+            if (username == null || username.isBlank()) break;
+            adminCredentials.put(username, password);
+        }
+        log.info("Loaded {} admin user(s)", adminCredentials.size());
     }
 
     @PostMapping("/login")
@@ -47,7 +45,7 @@ public class AuthController {
 
     private boolean isValidCredentials(String username, String password) {
         if (username == null || password == null) return false;
-        return (adminUser1.equals(username) && adminPass1.equals(password))
-                || (adminUser2.equals(username) && adminPass2.equals(password));
+        String expected = adminCredentials.get(username);
+        return expected != null && expected.equals(password);
     }
 }
