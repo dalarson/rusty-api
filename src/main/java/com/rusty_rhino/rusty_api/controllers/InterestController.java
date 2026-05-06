@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,18 @@ public class InterestController {
         } catch (Exception e) {
             log.warn("Failed to read interest entries: {}", e.getMessage());
             return Collections.emptyList();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteInterest(@PathVariable String id) {
+        try {
+            repo.deleteById(id, new com.azure.cosmos.models.PartitionKey("interest")).block();
+            log.info("Interest entry {} deleted", id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("Failed to delete interest entry {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

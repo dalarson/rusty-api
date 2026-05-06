@@ -15,6 +15,7 @@ import com.rusty_rhino.rusty_api.repository.InventoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
@@ -26,6 +27,11 @@ public class InventoryController {
     @GetMapping("/inventory")
     Flux<InventoryItem> getInventory() {
         return repo.findAll();
+    }
+
+    @GetMapping("/inventory/{id}")
+    public Mono<InventoryItem> getInventoryItem(@PathVariable String id) {
+        return repo.findById(id, pk);
     }
 
     @PutMapping("/inventory")
@@ -49,7 +55,9 @@ public class InventoryController {
                     .replace("/price", item.getPrice())
                     .replace("/sold", item.isSold())
                     .replace("/type", item.getType())
-                    .replace("/imgUrl", item.getImgUrl());
+                    .replace("/imgUrl", item.getImgUrl())
+                    .replace("/beforeImgUrls", item.getBeforeImgUrls())
+                    .replace("/afterImgUrls", item.getAfterImgUrls());
             repo.save(id, pk, InventoryItem.class, patchOps).subscribe();
             return item.getId();
         } catch (Exception e) {
