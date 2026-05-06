@@ -1,5 +1,7 @@
 package com.rusty_rhino.rusty_api.models;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import com.azure.spring.data.cosmos.core.mapping.Container;
 import com.azure.spring.data.cosmos.core.mapping.GeneratedValue;
@@ -23,6 +25,8 @@ public class InventoryItem {
     @NonNull
     private double price;
     private String imgUrl;
+    private List<String> beforeImgUrls;
+    private List<String> afterImgUrls;
     private boolean sold;
     @NonNull
     private String type;
