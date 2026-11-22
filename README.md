@@ -1,2 +1,3 @@
 # rusty-api
-REST API Service for rusty-rhino client
+
+This project is deprecated. The backend API code has been moved into the client repo dalarson/rusty-rhino.
